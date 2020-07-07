@@ -11,7 +11,7 @@
 
     <div class="row">
         <div class="col-md-6">
-            <div><strong>Date:</strong> {{event?.name}}</div>
+            <div><strong>Date:</strong> {{event?.date}}</div>
             <div><strong>Time:</strong> {{event?.time}}</div>
             <div><strong>Price:</strong> ${{event?.price}}</div>
         </div>
@@ -23,4 +23,20 @@
             </address>
         </div>
     </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-md-2">
+            <h3 style="margin: 10px;">Sessions</h3>
+        </div>
+        <div class="col-md-2">
+            <a (click)="addViewSessions()" *ngIf="!inAddMode" style="cursor: pointer;">Add Sessions</a>
+        </div>
+    </div>
+
+    <session-list *ngIf="!inAddMode" [sessions]="event?.sessions"></session-list>
+
+    <create-session *ngIf="inAddMode" (save)="saveSession($event)"></create-session>
 </div>
+
