@@ -12,13 +12,17 @@ import { CreateEventComponent } from './events/create-event.component';
 import { ErrorComponent } from './errors/error.component';
 import { checkComponentState } from './events/event-details/deactivate.guard';
 import { CreateSessionComponent } from './events/event-details/create-session.component';
+import { CollapsibleWellComponent } from './common/collapsible-well.component';
+import { DurationPipe } from './events/shared/duration.pipe';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
     imports: [
         FormsModule,
         ReactiveFormsModule,
         BrowserModule,
-        RouterModule.forRoot(appRoutes)
+        RouterModule.forRoot(appRoutes),
+        HttpClientModule
     ],
     declarations: [
         AppComponent,
@@ -29,7 +33,9 @@ import { CreateSessionComponent } from './events/event-details/create-session.co
         CreateEventComponent,
         ErrorComponent,
         CreateSessionComponent,
-        SessionListComponent
+        SessionListComponent,
+        CollapsibleWellComponent,
+        DurationPipe
     ],
     providers: [{ provide: checkComponentState, useValue: checkComponentState }],
     bootstrap: [AppComponent]
