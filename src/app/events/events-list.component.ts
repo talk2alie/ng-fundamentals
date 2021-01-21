@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { IEvent } from './IEvent';
-import { EventService } from './shared/event.service';
-import { ToastrService } from '../common/toastr.service';
 import { ActivatedRoute } from '@angular/router';
+import { TOASTR_TOKEN } from '../common/toastr.service';
+import { Toastr } from '../common/Toastr';
 
 @Component({
     templateUrl: './events-list.component.html',
@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 export class EventsListComponent implements OnInit {
     events: IEvent[];
 
-    constructor(private eventService: EventService, private activatedRoute: ActivatedRoute, private toastr: ToastrService) {
+    constructor(private activatedRoute: ActivatedRoute, @Inject(TOASTR_TOKEN) private toastr: Toastr) {
     }
 
     ngOnInit(): void {
@@ -21,3 +21,4 @@ export class EventsListComponent implements OnInit {
         this.toastr.success(name);
     }
 }
+

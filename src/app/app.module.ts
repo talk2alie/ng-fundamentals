@@ -15,6 +15,15 @@ import { CreateSessionComponent } from './events/event-details/create-session.co
 import { CollapsibleWellComponent } from './common/collapsible-well.component';
 import { DurationPipe } from './events/shared/duration.pipe';
 import { HttpClientModule } from '@angular/common/http';
+import { Toastr } from './common/Toastr';
+import { TOASTR_TOKEN } from './common/toastr.service';
+import {JQUERY_TOKEN} from './common/jQuery.token';
+
+// In newer versions of Angular, we can use:
+// let toastr: Toastr = window['toastr']
+// This is because the toastr object ultimately ends up as a global property on the window object
+declare let toastr: Toastr;
+declare let jQuery: Object;
 
 @NgModule({
     imports: [
@@ -37,7 +46,21 @@ import { HttpClientModule } from '@angular/common/http';
         CollapsibleWellComponent,
         DurationPipe
     ],
-    providers: [{ provide: checkComponentState, useValue: checkComponentState }],
+    providers: [
+        {
+            provide: checkComponentState,
+            useValue: checkComponentState
+        },
+        {
+            provide: TOASTR_TOKEN,
+            useValue: toastr
+        },
+        {
+            provide: JQUERY_TOKEN,
+            useValue: jQuery
+        }
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
+

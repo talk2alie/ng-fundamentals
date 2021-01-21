@@ -1,17 +1,17 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { CanActivate, CanDeactivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router, Resolve } from '@angular/router';
 import { Observable } from 'rxjs';
 import { EventService } from '../shared/event.service';
-import { ToastrService } from 'src/app/common/toastr.service';
 import { CreateEventComponent } from '../create-event.component';
-import { IEvent } from '../IEvent';
+import { TOASTR_TOKEN } from 'src/app/common/toastr.service';
+import { Toastr } from 'src/app/common/Toastr';
 
 @Injectable({
     providedIn: 'root'
 })
 export class EventDetailGuard implements CanActivate, CanDeactivate<CreateEventComponent> {
 
-    constructor(private router: Router, private eventService: EventService, private toastr: ToastrService) {
+    constructor(private router: Router, private eventService: EventService, @Inject(TOASTR_TOKEN) private toastr: Toastr) {
     }
 
     canDeactivate(component: CreateEventComponent, currentRoute: ActivatedRouteSnapshot, currentState: RouterStateSnapshot, nextState?: RouterStateSnapshot): boolean {

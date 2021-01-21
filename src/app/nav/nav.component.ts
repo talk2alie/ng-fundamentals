@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { AuthService } from '../user/auth.service';
+import { EventService } from '../events/shared/event.service';
+import { JQUERY_TOKEN } from '../common/jQuery.token';
 
 @Component({
     selector: 'app-nav',
@@ -12,6 +14,8 @@ import { AuthService } from '../user/auth.service';
     `]
 })
 export class NavComponent {
+    searchTerm: string;
+
     get firstName(): string {
         return this.authService.isAuthenticated() ? this.authService.currentUser.firstName : 'Anonymous';
     }
@@ -20,7 +24,14 @@ export class NavComponent {
         return this.authService.isAuthenticated();
     }
 
-    constructor(private authService: AuthService) {
+    constructor(private authService: AuthService
+        , private eventService: EventService
+        , @Inject(JQUERY_TOKEN)private $: any) {
 
+    }
+
+    searchSessions(searchTerm: string): void {
+        this.eventService.searchSessions(searchTerm)
+                         .subscribe(sessions => console.log(sessions));
     }
 }
