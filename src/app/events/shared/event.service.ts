@@ -338,13 +338,20 @@ export class EventService {
         this.events.forEach(e => {
             var sessions: ISession[] = e.sessions.filter(s =>
                 s.name.toLocaleLowerCase().indexOf(term) > -1);
-            sessions = sessions.map((s: ISession) => {
+            sessions = sessions.map((s: any) => {
+                // We are attaching the eventId property to the ISession object
+                // on the fly since we need that property, but the object does
+                // not have it. This is a TS (or JS) capability.
+
+                // Another solution would be to simply add the property to the type
                 s.eventId = e.id;
                 return s;
             });
             foundSessions = foundSessions.concat(sessions);
         });
 
+        // Since we want to simulate returning an observable, we can create
+        // an observable on the fly by using the EventEmitter, as shown here
         var emitter = new EventEmitter<ISession[]>(true);
         setTimeout(() => {
             emitter.emit(foundSessions);

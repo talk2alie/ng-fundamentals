@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { AuthService } from '../user/auth.service';
 import { EventService } from '../events/shared/event.service';
 import { JQUERY_TOKEN } from '../common/jQuery.token';
+import { ISession } from '../events/ISession';
 
 @Component({
     selector: 'app-nav',
@@ -15,6 +16,7 @@ import { JQUERY_TOKEN } from '../common/jQuery.token';
 })
 export class NavComponent {
     searchTerm: string;
+    foundSessions: ISession[];
 
     get firstName(): string {
         return this.authService.isAuthenticated() ? this.authService.currentUser.firstName : 'Anonymous';
@@ -32,6 +34,9 @@ export class NavComponent {
 
     searchSessions(searchTerm: string): void {
         this.eventService.searchSessions(searchTerm)
-                         .subscribe(sessions => console.log(sessions));
+                         .subscribe(sessions => {
+                             this.foundSessions = sessions;
+                             console.log(this.foundSessions);
+                         });
     }
 }
